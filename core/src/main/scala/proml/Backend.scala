@@ -23,6 +23,8 @@ trait Backend[A, B] {
   def greater(x: A, y: Double): B
   def greater(x: Double, y: A): B = not(greater(y, x))
   def sqrt(x: A): A = power(x, 0.5)
+  def log(x: A): A
+  def exp(x: A): A
   def not(x: B): B
   def size(x: A): Long
   def sumOnShape(x: A): Double
