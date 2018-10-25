@@ -20,19 +20,19 @@ object Continuous {
     normal[A, B](mu, sigma).map(x => x * x).repeat(n).map{_.total}
   }
 
-  def students_t[A, B](df: Int, mu: A, sigma: A)(implicit c: Backend[A, B])= {
+  def studentsT[A, B](df: Int, mu: A, sigma: A)(implicit c: Backend[A, B])= {
     import c._
     for {
-      z <- normal[A, B](mu, sigma)
-      v <- chi2[A, B](df, mu, sigma)
-    } yield z * sqrt(df / v)
+      x <- normal[A, B](mu, sigma)
+      y <- chi2[A, B](df, mu, sigma)
+    } yield x * sqrt(divide(df, y))
   }
 
   def pareto[A, B](a: Double, xm: Double = 1.0, low: A, high: A)(implicit c: Backend[A, B]) =  {
     import c._
     for {
       x <- uniform[A, B](low, high)
-    } yield xm * power(x, -1/a)
+    } yield times(xm , power(x, -1/a))
   }
 
   def exponential[A, B](l: Double, low: A, high: A)(implicit c: Backend[A, B]) =  {
@@ -68,15 +68,15 @@ object Continuous {
   def cauchy[A, B](mu: A, sigma: A)(implicit c: Backend[A, B])= {
     import c._
     for {
-      c <-  normal[A, B](mu, sigma)
-      d <-  normal[A, B](mu, sigma)
-    } yield c / d
+      x <-  normal[A, B](mu, sigma)
+      y <-  normal[A, B](mu, sigma)
+    } yield x / y
   }
 
   def weibull[A, B](l: Double, k: Double, low: A, high: A)(implicit c: Backend[A, B]) =  {
     import c._
     for {
       y <- exponential[A, B](1, low, high)
-    } yield l * power(y, 1/k)
+    } yield times(l , power(y, 1/k))
   }
 }
