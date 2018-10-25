@@ -68,3 +68,25 @@ trait Backend[A, B] {
   }
 
 }
+
+object Backend {
+  implicit val doubleInstance = new Backend[Double, Boolean]{
+    import scala.util.Random
+    override def power(x: Double, y: Double): Double = Math.pow(x, y)
+    override def divide(x: Double, y: Double): Double = x/y
+    override def negate(x: Double): Double = -x
+    override def rand(x: Double): Double = Random.nextDouble()
+    override def randNormal(x: Double): Double = Random.nextGaussian()
+    override def zero(x: Double): Double = 0d
+    override def one(x: Double): Double = 1d
+    override def not(x: Boolean): Boolean = !x
+    override def size(x: Double): Long = 1
+    override def sumOnShape(x: Double): Double = x
+    override def greater(x: Double,y: Double): Boolean = x > y
+    override def minus(x: Double,y: Double): Double = x - y
+    override def plus(x: Double,y: Double): Double = x + y
+    override def times(x: Double,y: Double): Double = x * y
+    override def log(x: Double): Double = Math.log(x)
+    override def exp(x: Double): Double = Math.exp(x)
+  }
+}
