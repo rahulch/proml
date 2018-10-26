@@ -40,7 +40,7 @@ lazy val examples = module(
 
 lazy val tensorflowBackend = module(
   "Tensorflow",
-  "backend/Tensorflow",
+  "backends/Tensorflow",
   Seq(
     "org.platanios" %% "tensorflow" % "0.2.4" classifier "darwin-cpu-x86_64",
     "org.platanios" %% "tensorflow-data" % "0.2.4"
