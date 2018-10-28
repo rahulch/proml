@@ -7,7 +7,7 @@ import proml.Backend
 
 object Tensorflow {
   type TypedTensor[A] = Tensor
-  implicit val tensorInstance = new Backend[TypedTensor[Double], TypedTensor[Boolean]]{
+  implicit val tensorInstance = new Backend[TypedTensor[Double]]{
     implicit def tensorToMathOps(value: tensors.Tensor): MathOps = MathOps(value)
     override def plus(x: TypedTensor[Double], y: TypedTensor[Double]): TypedTensor[Double] = x + y
     override def plus(x: TypedTensor[Double], y: Double): TypedTensor[Double] = x + y
@@ -24,9 +24,6 @@ object Tensorflow {
     override def zero(x: TypedTensor[Double]): TypedTensor[Double] = Tensor.zeros(x.dataType, x.shape)
     override def one(x: TypedTensor[Double]): TypedTensor[Double] = Tensor.ones(x.dataType, x.shape)
     override def power(x: TypedTensor[Double], y: Double): TypedTensor[Double] = x ^ y
-    override def greater(x: TypedTensor[Double], y: TypedTensor[Double]): Tensor = x > y
-    override def greater(x: TypedTensor[Double], y: Double): Tensor = x > y
-    override def not(x: TypedTensor[Boolean]): Tensor = !x
     override def size(x: TypedTensor[Double]): Long = x.size
     override def sumOnShape(x: TypedTensor[Double]): Double = x.sum(null, false).entriesIterator.next().asInstanceOf[Double]
     override def log(x: TypedTensor[Double]): TypedTensor[Double] = log1p(x)

@@ -1,6 +1,6 @@
 package proml
 
-trait Backend[A, B] {
+trait Backend[A] {
   def plus(x: A, y: A): A
   def plus(x: A, y: Double): A
   def plus(x: Double, y: A): A = plus(y, x)
@@ -19,13 +19,9 @@ trait Backend[A, B] {
   def zero(x: A): A
   def one(x: A): A
   def power(x: A, y: Double): A
-  def greater(x: A, y: A): B
-  def greater(x: A, y: Double): B
-  def greater(x: Double, y: A): B = not(greater(y, x))
   def sqrt(x: A): A = power(x, 0.5)
   def log(x: A): A
   def exp(x: A): A
-  def not(x: B): B
   def size(x: A): Long
   def sumOnShape(x: A): Double
 
@@ -38,10 +34,6 @@ trait Backend[A, B] {
     def *(rhs: Double): A  = times(lhs, rhs)
     def /(rhs: A): A = divide(lhs, rhs)
     def /(rhs: Double): A  = divide(lhs, rhs)
-    def >(rhs: A): B = greater(lhs, rhs)
-    def >(rhs: Double): B = greater(lhs, rhs)
-    def <(rhs: A): B = not(greater(lhs, rhs))
-    def <(rhs: Double): B = not(greater(lhs, rhs))
     def |>(rhs: A): Boolean = sumOnShape(lhs) > sumOnShape(rhs)
     def |>(rhs: Double): Boolean = sumOnShape(lhs) > rhs
     def <|(rhs: A): Boolean = sumOnShape(lhs) < sumOnShape(rhs)
@@ -57,8 +49,6 @@ trait Backend[A, B] {
     def -(rhs: A): A = minus(lhs, rhs)
     def *(rhs: A): A = times(lhs, rhs)
     def /(rhs: A): A = divide(lhs, rhs)
-    def >(rhs: A): B = greater(lhs, rhs)
-    def <(rhs: A): B = greater(lhs, rhs)
   }
 
   implicit def mkDatatypeOps(lhs: A): Ops = new Ops(lhs)
@@ -70,7 +60,7 @@ trait Backend[A, B] {
 }
 
 object Backend {
-  implicit val doubleInstance = new Backend[Double, Boolean]{
+  implicit val doubleInstance = new Backend[Double]{
     import scala.util.Random
     override def power(x: Double, y: Double): Double = Math.pow(x, y)
     override def divide(x: Double, y: Double): Double = x/y
@@ -79,10 +69,8 @@ object Backend {
     override def randNormal(x: Double): Double = Random.nextGaussian()
     override def zero(x: Double): Double = 0d
     override def one(x: Double): Double = 1d
-    override def not(x: Boolean): Boolean = !x
     override def size(x: Double): Long = 1
     override def sumOnShape(x: Double): Double = x
-    override def greater(x: Double,y: Double): Boolean = x > y
     override def minus(x: Double,y: Double): Double = x - y
     override def plus(x: Double,y: Double): Double = x + y
     override def times(x: Double,y: Double): Double = x * y

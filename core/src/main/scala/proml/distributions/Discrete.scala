@@ -12,8 +12,8 @@ object Discrete {
     def nextInt: Int => Int
   }
 
-  def simpleUniform = uniform[Double, Boolean](0, 1)
-  def simpleNormal = normal[Double, Boolean](0, 1)
+  def simpleUniform = uniform[Double](0, 1)
+  def simpleNormal = normal[Double](0, 1)
 
   sealed abstract class Coin
   case object H extends Coin
