@@ -28,6 +28,8 @@ object Tensorflow {
     override def sumOnShape(x: TypedTensor[Double]): Double = x.sum(null, false).entriesIterator.next().asInstanceOf[Double]
     override def log(x: TypedTensor[Double]): TypedTensor[Double] = log1p(x)
     override def exp(x: TypedTensor[Double]): TypedTensor[Double] = expm1(x)
+    override def dot(x: TypedTensor[Double], y: TypedTensor[Double]): TypedTensor[Double] = x.tensorDot(y, x, y)
+    override def transpose(x: TypedTensor[Double]): TypedTensor[Double] = x.transpose()
   }
 
   def toString(t: Tensor) = {

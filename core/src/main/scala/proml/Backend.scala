@@ -24,6 +24,8 @@ trait Backend[A] {
   def exp(x: A): A
   def size(x: A): Long
   def sumOnShape(x: A): Double
+  def dot(x: A, y: A): A
+  def transpose(x: A): A
 
   class Ops(lhs: A) {
     def +(rhs: A): A = plus(lhs, rhs)
@@ -42,6 +44,7 @@ trait Backend[A] {
     def ones(): A = one(lhs)
     def zeroes(): A = zero(lhs)
     def sum: Double = sumOnShape(lhs)
+    def T: A = transpose(lhs)
   }
 
   class DoubleOps(lhs: Double) {
@@ -76,5 +79,7 @@ object Backend {
     override def times(x: Double,y: Double): Double = x * y
     override def log(x: Double): Double = Math.log(x)
     override def exp(x: Double): Double = Math.exp(x)
+    override def dot(x: Double, y: Double): Double = x * y
+    override def transpose(x: Double): Double = x
   }
 }
