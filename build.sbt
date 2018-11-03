@@ -24,9 +24,6 @@ lazy val examples = module(
   "examples", Seq(
     "com.cibo" %% "evilplot" % "0.6.0",
     "com.cibo" %% "evilplot-repl" % "0.6.0",
-    "org.scalanlp" %% "breeze" % "1.0-RC2",
-    "org.scalanlp" %% "breeze-natives" % "1.0-RC2",
-    "org.scalanlp" %% "breeze-viz" % "1.0-RC2",
     "org.plotly-scala" %% "plotly-core" % "0.4.2",
     "org.plotly-scala" %% "plotly-render" % "0.4.2"
   ), Seq(
@@ -44,5 +41,14 @@ lazy val tensorflowBackend = module(
   Seq(
     "org.platanios" %% "tensorflow" % "0.2.4" classifier "darwin-cpu-x86_64",
     "org.platanios" %% "tensorflow-data" % "0.2.4"
+  ), Nil
+)
+
+lazy val breezeBackend = module(
+  "Breeze",
+  "backends/Breeze",
+  Seq(
+    "org.scalanlp" %% "breeze" % "1.0-RC2",
+    "org.scalanlp" %% "breeze-natives" % "1.0-RC2",
   ), Nil
 )
