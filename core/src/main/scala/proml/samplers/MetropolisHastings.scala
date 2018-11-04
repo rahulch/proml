@@ -6,15 +6,14 @@ case class MetropolisHastings(iterations: Int, burnIterations: Int) extends Samp
     implicit prior: P,
     posterior: P => Seq[(X, Y)] => Double,
     data: Seq[(X, Y)],
-    cy: Backend[Y],
-    cp: Backend[P]
+    proposal: P => P
   ): (P, Seq[P]) =  {
     (0 to iterations).foldLeft(prior, Seq.empty[P]) {
       case ((current, samples: Seq[P]), iteration: Int) =>
-        val n        = data.size
-        val proposal = prior // TODO : Figure out a way to get proposals automatically
-        val result   = if (posterior(proposal)(data) > posterior(current)(data)) proposal else current
-        (result, if (iteration > burnIterations) samples :+ proposal else Nil)
+        val n = data.size
+        val p = proposal(current)
+        val result = if (posterior(p)(data) >= posterior(current)(data)) p else current
+        (result, if (iteration > burnIterations) samples :+ p else Nil)
     }
   }
 }

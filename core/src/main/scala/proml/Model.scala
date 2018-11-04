@@ -7,21 +7,20 @@ trait Model[P, X, Y]{
 
   def logNormalLikelihood(param:P)(data: Seq[(X, Y)])(implicit cy: Backend[Y])  = data.map{case(x, y) =>
     import cy._
-    ((model(param)(x) - y) * (model(param)(x) - y) / (-2.0 * data.size)).sum
+    ((model(param)(x) - y) * (model(param)(x) - y) / (-2.0)).sum
   }.sum
 
   def prior: P
 
-  def logNormalPrior(param: P)(implicit cp: Backend[P]) = {
-    import cp._
-    ((param - prior) * (param - prior) / -2.0).sum
+  def logPrior: P => Double
+
+  def posterior(param:P)(data: Seq[(X, Y)])(implicit cy: Backend[Y]) = {
+    logNormalLikelihood(param)(data)(cy) + logPrior(param)
   }
 
-  def posterior(param:P)(data: Seq[(X, Y)])(implicit cy: Backend[Y], cp: Backend[P]) = {
-    logNormalLikelihood(param)(data)(cy) + logNormalPrior(param)(cp)
-  }
+  def proposal: P => P
 
-  def fit(data: Seq[(X, Y)], sampler: Sampler)(implicit cy: Backend[Y], cp: Backend[P]) = {
-    sampler.sample(prior, posterior, data, cy, cp)
+  def fit(data: Seq[(X, Y)], sampler: Sampler)(implicit cy: Backend[Y]) = {
+    sampler.sample[P, X, Y](prior, posterior, data, proposal)
   }
 }

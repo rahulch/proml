@@ -36,6 +36,7 @@ trait Backend[A] {
     def *(rhs: Double): A  = times(lhs, rhs)
     def /(rhs: A): A = divide(lhs, rhs)
     def /(rhs: Double): A  = divide(lhs, rhs)
+    def ^(rhs: Double): A  = power(lhs, rhs)
     def |>(rhs: A): Boolean = sumOnShape(lhs) > sumOnShape(rhs)
     def |>(rhs: Double): Boolean = sumOnShape(lhs) > rhs
     def <|(rhs: A): Boolean = sumOnShape(lhs) < sumOnShape(rhs)

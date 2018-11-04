@@ -6,7 +6,6 @@ trait Sampler {
     implicit prior: P,
     posterior: P => Seq[(X, Y)] => Double,
     data: Seq[(X, Y)],
-    cy: Backend[Y],
-    cp: Backend[P]
+    proposal: P => P
   ): (P, Seq[P])
 }

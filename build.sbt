@@ -2,7 +2,10 @@ lazy val commonSettings = Seq(
   name := "proml",
   version := "0.1",
   scalaVersion := "2.12.7",
-  scalacOptions += "-Ypartial-unification"
+  scalacOptions += "-Ypartial-unification",
+  libraryDependencies ++= Seq(  
+    "com.chuusai" %% "shapeless" % "2.3.3"
+  )
 )
 
 lazy val core = (project in file("core")).settings(
