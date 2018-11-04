@@ -1,5 +1,4 @@
 package proml.samplers
-import proml.Backend
 
 trait Sampler {
   def sample[P, X, Y](

@@ -33,7 +33,6 @@ trait Distribution[A] {
       @tailrec
       def helper(sofar: List[A]): List[A] = {
         if (pred(sofar)) sofar
-
         else helper(self.get :: sofar)
       }
       helper(Nil)
