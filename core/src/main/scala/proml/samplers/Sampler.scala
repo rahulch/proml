@@ -1,16 +1,12 @@
 package proml.samplers
-
-import proml.distributions.Distribution
+import proml.Backend
 
 trait Sampler {
-
-  def fit[V, D](
-     initial: V,
-     distribution: V => Distribution[V],
-     observations: Seq[D],
-     cost: (V, Seq[D]) => Double,
-     iterations: Int,
-     iterationsToBurn: Int,
-   ): (V, Seq[V])
-
+  def sample[P, X, Y](
+    implicit prior: P,
+    posterior: P => Seq[(X, Y)] => Double,
+    data: Seq[(X, Y)],
+    cy: Backend[Y],
+    cp: Backend[P]
+  ): (P, Seq[P])
 }
