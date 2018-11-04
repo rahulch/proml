@@ -2,17 +2,21 @@ package proml.distributions
 
 import proml.Backend
 
-trait Continuous[A] extends Distribution[A]
+trait Continuous[A] extends Distribution[A] {
+  def logPdf(a: A): Double
+}
 
 object Continuous {
-  def normal[A](mu: A, sigma: A)(implicit c: Backend[A]) = new Continuous[A] {
+  def normal[A](mu: A, sigma: A)(implicit c: Backend[A]): Continuous[A] = new Continuous[A] {
     import c._
     override def get = randNormal(mu) * sigma + mu
+    override def logPdf(x: A): Double = (((x - mu)^2d)/((sigma^2) * -2d)).sum
   }
 
-  def uniform[A](low: A, high: A)(implicit c: Backend[A]) = new Continuous[A] {
+  def uniform[A](low: A, high: A)(implicit c: Backend[A]): Continuous[A] = new Continuous[A] {
     import c._
     override def get = rand(low) * (high - low)
+    override def logPdf(x: A): Double = -1d * log(high-low).sum
   }
 
   def chi2[A](n: Int, mu: A, sigma: A)(implicit c: Backend[A])= {
