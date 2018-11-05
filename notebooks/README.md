@@ -44,3 +44,13 @@ coursier bootstrap \
 ./almond --install 
 ```
 
+## Evilplot
+
+https://cibotech.github.io/evilplot
+
+```
+git clone git@github.com:cibotech/evilplot.git
+git checkout 294ede802ce04f0610666b0ca89927aed70cf99b
+cd evilplot
+sbt publisLocal
+```
