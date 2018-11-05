@@ -54,3 +54,12 @@ git checkout 294ede802ce04f0610666b0ca89927aed70cf99b
 cd evilplot
 sbt publisLocal
 ```
+
+## proml
+
+```
+git clone git@github.com:rahulch/proml.git
+git checkout efff7b9891d9f58ae3c146cbe3e2aef41720bfed
+cd proml
+sbt publisLocal
+```
