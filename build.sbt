@@ -29,8 +29,10 @@ lazy val examples = module(
   "examples", Seq(
     "com.cibo" %% "evilplot" % "0.6.0",
     "com.cibo" %% "evilplot-repl" % "0.6.0",
+    "org.scalanlp" %% "breeze" % "1.0-RC2",
+    "org.scalanlp" %% "breeze-natives" % "1.0-RC2",
     "org.plotly-scala" %% "plotly-core" % "0.4.2",
-    "org.plotly-scala" %% "plotly-render" % "0.4.2"
+    "org.plotly-scala" %% "plotly-render" % "0.4.2",
   ), Seq(
     Resolver.sonatypeRepo("releases"),
     Resolver.bintrayRepo("cibotech", "public"),
@@ -38,7 +40,7 @@ lazy val examples = module(
     "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases/",
     "Jzy3d releases" at "http://maven.jzy3d.org/releases/"
   )
-)
+).dependsOn(breezeBackend % "compile->compile")
 
 lazy val tensorflowBackend = module(
   "tensorflow-backend",
@@ -54,6 +56,6 @@ lazy val breezeBackend = module(
   "backends/Breeze",
   Seq(
     "org.scalanlp" %% "breeze" % "1.0-RC2",
-    "org.scalanlp" %% "breeze-natives" % "1.0-RC2",
+    "org.scalanlp" %% "breeze-natives" % "1.0-RC2"
   ), Nil
 )
