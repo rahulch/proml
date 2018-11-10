@@ -1,38 +1,43 @@
 package proml.backend
 
-import breeze.numerics
-import breeze.linalg._
-import scala.util.Random
-import proml.Backend
+import breeze.linalg.DenseMatrix
+
+import shapeless._
+import shapeless.ops.nat._
 
 object Breeze {
-  implicit val breezeInstance = new Backend[DenseMatrix[Double]] {
-    override def plus(x: DenseMatrix[Double], y: DenseMatrix[Double]): DenseMatrix[Double]  = x + y
-    override def plus(x: DenseMatrix[Double], y: Double): DenseMatrix[Double]               = x + y
-    override def minus(x: DenseMatrix[Double], y: DenseMatrix[Double]): DenseMatrix[Double] = x - y
-    override def minus(x: DenseMatrix[Double], y: Double): DenseMatrix[Double]              = x - y
-    override def times(x: DenseMatrix[Double], y: DenseMatrix[Double]): DenseMatrix[Double] =
-      x *:* y
-    override def times(x: DenseMatrix[Double], y: Double): DenseMatrix[Double] = x * y
-    override def divide(x: DenseMatrix[Double], y: DenseMatrix[Double]): DenseMatrix[Double] =
-      x /:/ y
-    override def divide(x: DenseMatrix[Double], y: Double): DenseMatrix[Double] = x / y
-    override def divide(x: Double, y: DenseMatrix[Double]): DenseMatrix[Double] = x / y
-    override def negate(x: DenseMatrix[Double]): DenseMatrix[Double]            = -x
-    override def rand(x: DenseMatrix[Double]): DenseMatrix[Double] = x map { _ =>
-      Random.nextDouble()
+
+  implicit def breezeInstance = new MatrixOps[DenseMatrix[Double]] {
+    override def zeros[M <: Nat, N <: Nat](implicit mToInt: ToInt[M], nToInt: ToInt[N]) = {
+      Matrix[M, N](DenseMatrix.zeros[Double](mToInt.apply(), nToInt.apply()))
     }
-    override def randNormal(x: DenseMatrix[Double]): DenseMatrix[Double] = x map { _ =>
-      Random.nextGaussian()
+
+    override def ones[M <: Nat, N <: Nat](implicit mToInt: ToInt[M], nToInt: ToInt[N]) = {
+      Matrix[M, N](DenseMatrix.ones[Double](mToInt.apply(), nToInt.apply()))
     }
-    override def zero(x: DenseMatrix[Double]): DenseMatrix[Double]                        = x.zeroes()
-    override def one(x: DenseMatrix[Double]): DenseMatrix[Double]                         = x.ones()
-    override def power(x: DenseMatrix[Double], y: Double): DenseMatrix[Double]            = numerics.pow(x, y)
-    override def size(x: DenseMatrix[Double]): Long                                       = x.size
-    override def sumOnShape(x: DenseMatrix[Double]): Double                               = x.sum
-    override def log(x: DenseMatrix[Double]): DenseMatrix[Double]                         = numerics.log(x)
-    override def exp(x: DenseMatrix[Double]): DenseMatrix[Double]                         = numerics.exp(x)
-    override def dot(x: DenseMatrix[Double], y: DenseMatrix[Double]): DenseMatrix[Double] = x * y
-    override def transpose(x: DenseMatrix[Double]): DenseMatrix[Double]                   = x.t
+
+    override def transpose[M <: Nat, N <: Nat](underlying: DenseMatrix[Double]) = {
+      Matrix[N, M](underlying.t)
+    }
+    override def mdot[M <: Nat, N <: Nat, O <: Nat](lhs: Matrix[M, N],
+                                                    other: Matrix[N, O]): Matrix[M, O] = {
+      Matrix[M, O](lhs dot other)
+    }
+    override def mpls[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Matrix[M, N]): Matrix[M, N] =
+      Matrix[M, N](lhs.underlying + other.underlying)
+    override def mpls[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Double): Matrix[M, N] =
+      Matrix[M, N](lhs.underlying + other.underlying)
+    override def mmul[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Matrix[M, N]): Matrix[M, N] =
+      Matrix[M, N](lhs.underlying *:* other.underlying)
+    override def mmul[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Double): Matrix[M, N] =
+      Matrix[M, N](lhs.underlying *:* other.underlying)
+    override def msub[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Matrix[M, N]): Matrix[M, N] =
+      Matrix[M, N](lhs.underlying - other.underlying)
+    override def msub[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Double): Matrix[M, N] =
+      Matrix[M, N](lhs.underlying - other.underlying)
+    override def mdiv[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Matrix[M, N]): Matrix[M, N] =
+      Matrix[M, N](lhs.underlying /:/ other.underlying)
+    override def mdiv[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Double): Matrix[M, N] =
+      Matrix[M, N](lhs.underlying /:/ other.underlying)
   }
 }
