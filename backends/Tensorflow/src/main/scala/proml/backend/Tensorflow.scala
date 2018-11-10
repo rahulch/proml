@@ -15,8 +15,6 @@ object Tensorflow {
     override def times(x: TypedTensor[Double], y: Double): TypedTensor[Double]               = x * y
     override def divide(x: TypedTensor[Double], y: TypedTensor[Double]): TypedTensor[Double] = x / y
     override def divide(x: TypedTensor[Double], y: Double): TypedTensor[Double]              = x / y
-    override def divide(x: Double, y: TypedTensor[Double]): TypedTensor[Double]              = x / y
-    override def negate(x: TypedTensor[Double]): TypedTensor[Double]                         = -x
     override def rand(x: TypedTensor[Double]): TypedTensor[Double] =
       Tensor.rand(x.dataType, x.shape)
     override def randNormal(x: TypedTensor[Double]): TypedTensor[Double] =
