@@ -12,8 +12,6 @@ trait Backend[A] {
   def times(x: Double, y: A): A = times(y, x)
   def divide(x: A, y: A): A
   def divide(x: A, y: Double): A
-  def divide(x: Double, y: A): A
-  def negate(x: A): A
   def rand(x: A): A
   def randNormal(x: A): A
   def zero(x: A): A
@@ -26,30 +24,23 @@ trait Backend[A] {
   def sumOnShape(x: A): Double
 
   class Ops(lhs: A) {
-    def +(rhs: A): A             = plus(lhs, rhs)
-    def +(rhs: Double): A        = plus(lhs, rhs)
-    def -(rhs: A): A             = minus(lhs, rhs)
-    def -(rhs: Double): A        = minus(lhs, rhs)
-    def *(rhs: A): A             = times(lhs, rhs)
-    def *(rhs: Double): A        = times(lhs, rhs)
-    def /(rhs: A): A             = divide(lhs, rhs)
-    def /(rhs: Double): A        = divide(lhs, rhs)
-    def ^(rhs: Double): A        = power(lhs, rhs)
-    def |>(rhs: A): Boolean      = sumOnShape(lhs) > sumOnShape(rhs)
-    def |>(rhs: Double): Boolean = sumOnShape(lhs) > rhs
-    def <|(rhs: A): Boolean      = sumOnShape(lhs) < sumOnShape(rhs)
-    def <|(rhs: Double): Boolean = sumOnShape(lhs) < rhs
-    def unary_-(): A             = negate(lhs)
-    def ones(): A                = one(lhs)
-    def zeroes(): A              = zero(lhs)
-    def sum: Double              = sumOnShape(lhs)
+    def +(rhs: A): A      = plus(lhs, rhs)
+    def +(rhs: Double): A = plus(lhs, rhs)
+    def -(rhs: A): A      = minus(lhs, rhs)
+    def -(rhs: Double): A = minus(lhs, rhs)
+    def *(rhs: A): A      = times(lhs, rhs)
+    def *(rhs: Double): A = times(lhs, rhs)
+    def /(rhs: A): A      = divide(lhs, rhs)
+    def /(rhs: Double): A = divide(lhs, rhs)
+    def ^(rhs: Double): A = power(lhs, rhs)
+    def unary_-(): A      = lhs * -1
+    def sum: Double       = sumOnShape(lhs)
   }
 
   class DoubleOps(lhs: Double) {
     def +(rhs: A): A = plus(lhs, rhs)
     def -(rhs: A): A = minus(lhs, rhs)
     def *(rhs: A): A = times(lhs, rhs)
-    def /(rhs: A): A = divide(lhs, rhs)
   }
 
   implicit def mkDatatypeOps(lhs: A): Ops                = new Ops(lhs)
@@ -65,7 +56,6 @@ object Backend {
     import scala.util.Random
     override def power(x: Double, y: Double): Double  = Math.pow(x, y)
     override def divide(x: Double, y: Double): Double = x / y
-    override def negate(x: Double): Double            = -x
     override def rand(x: Double): Double              = Random.nextDouble()
     override def randNormal(x: Double): Double        = Random.nextGaussian()
     override def zero(x: Double): Double              = 0d
