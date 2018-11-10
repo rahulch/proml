@@ -1,30 +1,27 @@
 package proml.backend
-import shapeless.Nat
-import shapeless.ops.nat.ToInt
 
 trait MatrixOps[A] {
 
-  case class Matrix[M <: Nat, N <: Nat](underlying: A)
+  import MatrixOps._
 
-  def zeros[M <: Nat, N <: Nat](
-    implicit
-    mToInt: ToInt[M],
-    nToInt: ToInt[N]
-  ): Matrix[M, N]
-  def ones[M <: Nat, N <: Nat](
-    implicit
-    mToInt: ToInt[M],
-    nToInt: ToInt[N]
-  ): Matrix[M, N]
+  def zeros[M, N](m: Int, n: Int): Matrix[A, M, N]
+  def ones[M, N](m: Int, n: Int): Matrix[A, M, N]
+  def rand[M, N](m: Int, n: Int): Matrix[A, M, N]
+  def randNormal[M, N](m: Int, n: Int): Matrix[A, M, N]
 
-  def transpose[M <: Nat, N <: Nat](lhs: Matrix[M, N]): Matrix[N, M]
-  def mdot[M <: Nat, N <: Nat, O <: Nat](lhs: Matrix[M, N], other: Matrix[N, O]): Matrix[M, O]
-  def mpls[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Matrix[M, N]): Matrix[M, N]
-  def mpls[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Double): Matrix[M, N]
-  def mmul[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Matrix[M, N]): Matrix[M, N]
-  def mmul[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Double): Matrix[M, N]
-  def msub[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Matrix[M, N]): Matrix[M, N]
-  def msub[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Double): Matrix[M, N]
-  def mdiv[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Matrix[M, N]): Matrix[M, N]
-  def mdiv[M <: Nat, N <: Nat](lhs: Matrix[M, N], other: Double): Matrix[M, N]
+  def transpose[M, N](lhs: Matrix[A, M, N]): Matrix[A, N, M]
+
+  def mdot[M, N, O](lhs: Matrix[A, M, N], other: Matrix[A, N, O]): Matrix[A, M, O]
+  def mpls[M, N](lhs: Matrix[A, M, N], other: Matrix[A, M, N]): Matrix[A, M, N]
+  def mpls[M, N](lhs: Matrix[A, M, N], other: Double): Matrix[A, M, N]
+  def mmul[M, N](lhs: Matrix[A, M, N], other: Matrix[A, M, N]): Matrix[A, M, N]
+  def mmul[M, N](lhs: Matrix[A, M, N], other: Double): Matrix[A, M, N]
+  def msub[M, N](lhs: Matrix[A, M, N], other: Matrix[A, M, N]): Matrix[A, M, N]
+  def msub[M, N](lhs: Matrix[A, M, N], other: Double): Matrix[A, M, N]
+  def mdiv[M, N](lhs: Matrix[A, M, N], other: Matrix[A, M, N]): Matrix[A, M, N]
+  def mdiv[M, N](lhs: Matrix[A, M, N], other: Double): Matrix[A, M, N]
+}
+
+object MatrixOps {
+  case class Matrix[A, M, N](underlying: A)
 }
