@@ -61,7 +61,7 @@ object BayesianDeepLearning extends App {
         (x: Matrix[DM, _N, _2]) => {
           import p._
           import breezeInstance._
-          msigmoid(mtanh(mtanh(x modot w1) modot w2) modot w3)
+          msigmoid(mtanh(mtanh(x dotProduct w1) dotProduct w2) dotProduct w3)
       }
     override def prior = priorAssumption
   }
@@ -79,7 +79,7 @@ object BayesianDeepLearning extends App {
   val predictions = {
     import breezeInstance._
     val testInput: Matrix[DM, _N, _2] = Matrix[DM, _N, _2](DenseMatrix(points: _*))
-    msigmoid(mtanh(mtanh(testInput modot best.w1) modot best.w2) modot best.w3).underlying.toDenseVector.toArray
+    msigmoid(mtanh(mtanh(testInput dotProduct best.w1) dotProduct best.w2) dotProduct best.w3).underlying.toDenseVector.toArray
   }
 
   scatterPlot(points.zip(predictions).map { case ((x, y), z) => Point3d[Double](x, y, z) })

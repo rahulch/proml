@@ -22,24 +22,25 @@ object Breeze {
     }
     override def transpose[M, N](lhs: Matrix[DM, M, N]) =
       Matrix[DM, N, M](lhs.underlying.t)
-    override def mdot[M, N, O](lhs: Matrix[DM, M, N], other: Matrix[DM, N, O]): Matrix[DM, M, O] = {
+    override def dotInner[M, N, O](lhs: Matrix[DM, M, N],
+                                   other: Matrix[DM, N, O]): Matrix[DM, M, O] = {
       Matrix[DM, M, O](lhs.underlying * other.underlying)
     }
-    override def mpls[M, N](lhs: Matrix[DM, M, N], other: Matrix[DM, M, N]): Matrix[DM, M, N] =
+    override def plsInner[M, N](lhs: Matrix[DM, M, N], other: Matrix[DM, M, N]): Matrix[DM, M, N] =
       Matrix[DM, M, N](lhs.underlying + other.underlying)
-    override def mpls[M, N](lhs: Matrix[DM, M, N], other: Double): Matrix[DM, M, N] =
+    override def plsInner[M, N](lhs: Matrix[DM, M, N], other: Double): Matrix[DM, M, N] =
       Matrix[DM, M, N](lhs.underlying + other)
-    override def mmul[M, N](lhs: Matrix[DM, M, N], other: Matrix[DM, M, N]): Matrix[DM, M, N] =
+    override def mulInner[M, N](lhs: Matrix[DM, M, N], other: Matrix[DM, M, N]): Matrix[DM, M, N] =
       Matrix[DM, M, N](lhs.underlying *:* other.underlying)
-    override def mmul[M, N](lhs: Matrix[DM, M, N], other: Double): Matrix[DM, M, N] =
+    override def mulInner[M, N](lhs: Matrix[DM, M, N], other: Double): Matrix[DM, M, N] =
       Matrix[DM, M, N](lhs.underlying * other)
-    override def msub[M, N](lhs: Matrix[DM, M, N], other: Matrix[DM, M, N]): Matrix[DM, M, N] =
+    override def subInner[M, N](lhs: Matrix[DM, M, N], other: Matrix[DM, M, N]): Matrix[DM, M, N] =
       Matrix[DM, M, N](lhs.underlying - other.underlying)
-    override def msub[M, N](lhs: Matrix[DM, M, N], other: Double): Matrix[DM, M, N] =
+    override def subInner[M, N](lhs: Matrix[DM, M, N], other: Double): Matrix[DM, M, N] =
       Matrix[DM, M, N](lhs.underlying - other)
-    override def mdiv[M, N](lhs: Matrix[DM, M, N], other: Matrix[DM, M, N]): Matrix[DM, M, N] =
+    override def divInner[M, N](lhs: Matrix[DM, M, N], other: Matrix[DM, M, N]): Matrix[DM, M, N] =
       Matrix[DM, M, N](lhs.underlying /:/ other.underlying)
-    override def mdiv[M, N](lhs: Matrix[DM, M, N], other: Double): Matrix[DM, M, N] =
+    override def divInner[M, N](lhs: Matrix[DM, M, N], other: Double): Matrix[DM, M, N] =
       Matrix[DM, M, N](lhs.underlying /:/ other)
     override def rand[M, N](m: Int, n: Int): Matrix[DM, M, N] =
       Matrix[DM, M, N](ones(m, n).underlying.map { _ =>
@@ -67,14 +68,17 @@ object Breeze {
         mo.zeros(x.underlying.rows, x.underlying.cols)
       override def one(x: Matrix[DM, M, N]): Matrix[DM, M, N] =
         mo.ones(x.underlying.rows, x.underlying.cols)
-      override def plus(x: Matrix[DM, M, N], y: Matrix[DM, M, N]): Matrix[DM, M, N]   = mpls(x, y)
-      override def plus(x: Matrix[DM, M, N], y: Double): Matrix[DM, M, N]             = mpls(x, y)
-      override def minus(x: Matrix[DM, M, N], y: Matrix[DM, M, N]): Matrix[DM, M, N]  = msub(x, y)
-      override def minus(x: Matrix[DM, M, N], y: Double): Matrix[DM, M, N]            = msub(x, y)
-      override def times(x: Matrix[DM, M, N], y: Matrix[DM, M, N]): Matrix[DM, M, N]  = mmul(x, y)
-      override def times(x: Matrix[DM, M, N], y: Double): Matrix[DM, M, N]            = mmul(x, y)
-      override def divide(x: Matrix[DM, M, N], y: Matrix[DM, M, N]): Matrix[DM, M, N] = mdiv(x, y)
-      override def divide(x: Matrix[DM, M, N], y: Double): Matrix[DM, M, N]           = mdiv(x, y)
+      override def plus(x: Matrix[DM, M, N], y: Matrix[DM, M, N]): Matrix[DM, M, N] = plsInner(x, y)
+      override def plus(x: Matrix[DM, M, N], y: Double): Matrix[DM, M, N]           = plsInner(x, y)
+      override def minus(x: Matrix[DM, M, N], y: Matrix[DM, M, N]): Matrix[DM, M, N] =
+        subInner(x, y)
+      override def minus(x: Matrix[DM, M, N], y: Double): Matrix[DM, M, N] = subInner(x, y)
+      override def times(x: Matrix[DM, M, N], y: Matrix[DM, M, N]): Matrix[DM, M, N] =
+        mulInner(x, y)
+      override def times(x: Matrix[DM, M, N], y: Double): Matrix[DM, M, N] = mulInner(x, y)
+      override def divide(x: Matrix[DM, M, N], y: Matrix[DM, M, N]): Matrix[DM, M, N] =
+        divInner(x, y)
+      override def divide(x: Matrix[DM, M, N], y: Double): Matrix[DM, M, N] = divInner(x, y)
       override def power(x: Matrix[DM, M, N], y: Double): Matrix[DM, M, N] =
         Matrix[DM, M, N](pow(x.underlying, y))
       override def log(x: Matrix[DM, M, N]): Matrix[DM, M, N] =
