@@ -33,7 +33,7 @@ $ ./almond --install
 git clone git@github.com:almond-sh/almond.git
 git checkout 0228db85c03ab448e3f810dc6b9680c2c1b5bba5
 cd almond
-sbt publisLocal
+sbt publishLocal
 
 SCALA_VERSION=2.12.7 ALMOND_VERSION=0.1.11-SNAPSHOT
 
@@ -52,7 +52,7 @@ https://cibotech.github.io/evilplot
 git clone git@github.com:cibotech/evilplot.git
 git checkout 294ede802ce04f0610666b0ca89927aed70cf99b
 cd evilplot
-sbt publisLocal
+sbt publishLocal
 ```
 
 ## proml
