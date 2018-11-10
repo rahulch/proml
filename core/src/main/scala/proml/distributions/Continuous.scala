@@ -1,6 +1,5 @@
 package proml.distributions
-
-import proml.Backend
+import proml.backend.Backend
 
 trait Continuous[A] extends Distribution[A] {
   def logPdf(a: A): Double
