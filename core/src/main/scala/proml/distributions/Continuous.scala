@@ -1,6 +1,5 @@
 package proml.distributions
-
-import proml.Backend
+import proml.backend.Backend
 
 trait Continuous[A] extends Distribution[A] {
   def logPdf(a: A): Double
@@ -29,7 +28,7 @@ object Continuous {
     for {
       x <- normal[A](mu, sigma)
       y <- chi2[A](df, mu, sigma)
-    } yield x * sqrt(divide(df, y))
+    } yield (x * Math.sqrt(df * 1.0)) / sqrt(y)
   }
 
   def pareto[A](a: Double, xm: Double = 1.0, low: A, high: A)(implicit c: Backend[A]) = {

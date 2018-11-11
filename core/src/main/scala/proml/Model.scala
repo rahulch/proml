@@ -1,4 +1,5 @@
 package proml
+import proml.backend.Backend
 import proml.samplers.Sampler
 
 trait Model[P, X, Y] {
