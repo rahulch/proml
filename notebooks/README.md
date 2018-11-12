@@ -31,7 +31,7 @@ $ ./almond --install
 ```shell
 # 0.1.11-SNAPSHOT Setup
 git clone git@github.com:almond-sh/almond.git
-git checkout 0228db85c03ab448e3f810dc6b9680c2c1b5bba5
+git checkout eed7aa2a0911a2871c6b9b134785c5c921bdae4a
 cd almond
 sbt publishLocal
 
