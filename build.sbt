@@ -10,7 +10,7 @@ lazy val commonSettings = Seq(
 
 lazy val core = (project in file("core")).settings(
   commonSettings ++ Seq(
-    name := "core"
+    name := "proml-core"
   )
 )
 
@@ -25,7 +25,7 @@ def module(moduleName: String, path: String, dependencies: Seq[ModuleID], depend
     ).dependsOn(core % "compile->compile;test->test")
 
 lazy val examples = module(
-  "examples",
+  "proml-examples",
   "examples", Seq(
     "com.cibo" %% "evilplot" % "0.6.0",
     "com.cibo" %% "evilplot-repl" % "0.6.0",
@@ -43,7 +43,7 @@ lazy val examples = module(
 ).dependsOn(breezeBackend % "compile->compile")
 
 lazy val tensorflowBackend = module(
-  "tensorflow-backend",
+  "proml-tensorflow-backend",
   "backends/Tensorflow",
   Seq(
     "org.platanios" %% "tensorflow" % "0.2.4" classifier "darwin-cpu-x86_64",
@@ -52,7 +52,7 @@ lazy val tensorflowBackend = module(
 )
 
 lazy val breezeBackend = module(
-  "breeze-backend",
+  "proml-breeze-backend",
   "backends/Breeze",
   Seq(
     "org.scalanlp" %% "breeze" % "1.0-RC2",
