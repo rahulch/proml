@@ -1,3 +1,14 @@
+# Start Jupyter server
+
+Follow the instructions below to install the dependencies
+
+Once you are done with the setup, you can start Jupyter as:
+```shell
+jupyter notebook
+```
+
+This should open a browser where you can see the notebooks 
+
 # Dependencies
 
 ## Jupyter 
@@ -31,17 +42,17 @@ $ ./almond --install
 ```shell
 # 0.1.11-SNAPSHOT Setup
 git clone git@github.com:almond-sh/almond.git
-git checkout eed7aa2a0911a2871c6b9b134785c5c921bdae4a
 cd almond
+git checkout eed7aa2a0911a2871c6b9b134785c5c921bdae4a
 sbt publishLocal
 
-SCALA_VERSION=2.12.7 ALMOND_VERSION=0.1.11-SNAPSHOT
+SCALA_VERSION=2.12.7 ALMOND_VERSION=0.1.11
 
 coursier bootstrap \
     -i user -I user:sh.almond:scala-kernel-api_$SCALA_VERSION:$ALMOND_VERSION \
     sh.almond:scala-kernel_$SCALA_VERSION:$ALMOND_VERSION \
     -o almond
-./almond --install 
+./almond --install --force
 ```
 
 ## Evilplot
