@@ -1,5 +1,7 @@
 # proml
 
+[![Gitter chat](https://badges.gitter.im/rahulch/proml.png)](https://gitter.im/rahulch/proml)
+
 proml is a purely functional, backend agnostic, modular Scala library for developing probabilistic machine learning models with a lot of emphasis on UI and model experimentation.
 
 ### proml-core
