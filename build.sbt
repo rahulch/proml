@@ -33,6 +33,8 @@ lazy val examples = module(
     "org.scalanlp" %% "breeze-natives" % "1.0-RC2",
     "org.plotly-scala" %% "plotly-core" % "0.4.2",
     "org.plotly-scala" %% "plotly-render" % "0.4.2",
+    "org.platanios" %% "tensorflow" % "0.4.0" classifier "darwin-cpu-x86_64",
+    "org.platanios" %% "tensorflow-data" % "0.4.0"
   ), Seq(
     Resolver.sonatypeRepo("releases"),
     Resolver.bintrayRepo("cibotech", "public"),
@@ -41,13 +43,14 @@ lazy val examples = module(
     "Jzy3d releases" at "http://maven.jzy3d.org/releases/"
   )
 ).dependsOn(breezeBackend % "compile->compile")
+.dependsOn(tensorflowBackend % "compile->compile")
 
 lazy val tensorflowBackend = module(
   "proml-tensorflow-backend",
   "backends/Tensorflow",
   Seq(
-    "org.platanios" %% "tensorflow" % "0.2.4" classifier "darwin-cpu-x86_64",
-    "org.platanios" %% "tensorflow-data" % "0.2.4"
+    "org.platanios" %% "tensorflow" % "0.4.0" classifier "darwin-cpu-x86_64",
+    "org.platanios" %% "tensorflow-data" % "0.4.0"
   ), Nil
 )
 
