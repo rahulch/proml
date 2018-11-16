@@ -9,11 +9,7 @@ proml is a purely functional, backend agnostic, modular Scala library for develo
   - Distributions: Continuous, Discrete
   - Samplers: MeteroPolisHastings 
 - Provides type classes for
-  - Typesafe Matrix operations
-    - Intended:
-    <img width="487" alt="image" src="https://user-images.githubusercontent.com/2048960/48650531-6c45e700-e9ab-11e8-853d-69d36494dc14.png">    
-    - Compile Error:
-    <img width="1245" alt="image" src="https://user-images.githubusercontent.com/2048960/48650590-c2b32580-e9ab-11e8-88ab-eb3d8aa9aa74.png">
+  - [Typesafe Matrix operations](https://github.com/rahulch/proml/wiki/Typesafe-Matrix-Ops)
   - Backend Agnostic Modeling
 
 ### backends
