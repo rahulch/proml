@@ -15,9 +15,9 @@ proml is a purely functional, backend agnostic, modular Scala library for develo
 ### backends
 Why stick to one backend when the machine learning models are universal in nature? The emphasis of this library is on the machine learning models, not the backends. So, we abstract this away with a type class. Following are few instances of this type class. You just need to import one of these instances for your experiments.
 
-A Neural Network Model with a new backend is one line change
-    <img width="1387" alt="image" src="https://user-images.githubusercontent.com/2048960/48650968-900a2c80-e9ad-11e8-84c6-51f710fdfe80.png">
-
+A Neural Network Model with a new backend is one line change !!!
+    <img width="1281" alt="image" src="https://user-images.githubusercontent.com/2048960/48651238-c85e3a80-e9ae-11e8-8070-e27aba6ac7c4.png">
+   
 It very easy to add support for new backends. Contributions are welcome!
 
 - `proml-breeze-backend` : Backend for Breeze. Mostly suited if you are computing on your laptop or experimenting for the first time 
