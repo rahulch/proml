@@ -29,8 +29,7 @@ Contains few modelling examples to get you started. Ideal for people experimenti
 ### notebooks
 Contains sample Jupyter scala notebooks. This is the best way to play with your models. Also very ideal for teaching/demos. If you are doing any research, we suggest you use these notebooks as your starting guide
 
-#### MC*
-- [Power of Random Numbers: Monte Carlo](https://github.com/rahulch/proml/blob/master/notebooks/MonteCarloPI.ipynb)
+#### MCMC
 - [MCMC](https://github.com/rahulch/proml/blob/master/notebooks/MCMC.ipynb)
 
 #### Models
